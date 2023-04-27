@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.virtushawk.apachekafkaplayground.entity.VehiclePositionUpdateDTO;
 
 @Service
@@ -19,6 +20,7 @@ public class SignalProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @Transactional
     public void sendSignal(String vehicleId, VehiclePositionUpdateDTO positionDTO) {
         kafkaTemplate.send(SIGNAL_TOPIC, vehicleId, positionDTO);
         LOGGER.info("Sent signal to : {}", SIGNAL_TOPIC);
