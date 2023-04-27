@@ -1,12 +1,14 @@
 package org.virtushawk.apachekafkaplayground.entity;
 
-public class VehiclePositionDTO extends BaseDTO {
+import jakarta.validation.constraints.NotNull;
 
+public class VehiclePositionUpdateDTO extends BaseDTO {
+
+    @NotNull(message = "X coordinate should not be null")
     private Double x;
 
+    @NotNull(message = "Y coordinate should not be null")
     private Double y;
-
-    private Double totalDistance;
 
     public Double getX() {
         return x;
@@ -24,20 +26,11 @@ public class VehiclePositionDTO extends BaseDTO {
         this.y = y;
     }
 
-    public Double getTotalDistance() {
-        return totalDistance;
-    }
-
-    public void setTotalDistance(Double totalDistance) {
-        this.totalDistance = totalDistance;
-    }
-
     @Override
     public String toString() {
         return "VehiclePositionDTO{" +
                 "x=" + x +
                 ", y=" + y +
-                ", totalDistance=" + totalDistance +
                 '}';
     }
 }

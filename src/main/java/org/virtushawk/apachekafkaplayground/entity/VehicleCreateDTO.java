@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class VehicleCreateDTO extends BaseDTO {
 
-    @NotNull
+    @NotNull(message = "Vehicle ID should not be null")
     private String vehicleId;
 
     private String name;

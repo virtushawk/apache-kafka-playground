@@ -20,6 +20,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
   kafka-2:
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -32,6 +33,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092,PLAINTEXT_HOST://localhost:39092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
   init-kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -43,7 +45,8 @@ services:
       kafka-topics --bootstrap-server kafka-1:9092 --list
       
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka-1:9092 --create --if-not-exists --topic topic-1 --replication-factor 2 --partitions 3
+      kafka-topics --bootstrap-server kafka-1:9092 --create --if-not-exists --topic signal-topic --replication-factor 2 --partitions 3
+      kafka-topics --bootstrap-server kafka-1:9092 --create --if-not-exists --topic position-topic --replication-factor 2 --partitions 3
       
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka-1:9092 --list

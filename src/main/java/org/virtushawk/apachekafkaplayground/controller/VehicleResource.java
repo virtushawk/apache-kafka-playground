@@ -2,12 +2,15 @@ package org.virtushawk.apachekafkaplayground.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.virtushawk.apachekafkaplayground.entity.VehicleCreateDTO;
+import org.virtushawk.apachekafkaplayground.entity.VehiclePositionUpdateDTO;
 import org.virtushawk.apachekafkaplayground.service.VehicleService;
 
 @RestController
@@ -24,5 +27,11 @@ public class VehicleResource {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerVehicle(@Valid @RequestBody VehicleCreateDTO createDTO) {
         vehicleService.register(createDTO);
+    }
+
+    @PutMapping("{id}/signal")
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePosition( @PathVariable String id, @Valid @RequestBody VehiclePositionUpdateDTO signalDTO) {
+        vehicleService.updatePosition(id, signalDTO);
     }
 }
