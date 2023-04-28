@@ -1,9 +1,11 @@
 package org.virtushawk.apachekafkaplayground.service;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -15,6 +17,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * At least once producer at most once consumer integration test
+ */
 class AtLeastOnceProducerAtMostOnceConsumerIntegrationTest extends KafkaIntegrationTest {
 
    @SuppressWarnings("JUnitMixedFramework")
@@ -55,26 +60,28 @@ class AtLeastOnceProducerAtMostOnceConsumerIntegrationTest extends KafkaIntegrat
 
    private Properties getProducerProperties() {
        Properties properties = new Properties();
-       properties.put("bootstrap.servers", "localhost:9092");
-       properties.put("linger.ms", "1");
-       properties.put("key.serializer", StringSerializer.class);
-       properties.put("value.serializer", StringSerializer.class);
+       properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+       properties.put(ProducerConfig.LINGER_MS_CONFIG, "1");
+       properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+       properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-       //At least once semantic
-       properties.put("acks", "1");
+       //At least once producer semantic
+       properties.put(ProducerConfig.ACKS_CONFIG, "1");
 
        return properties;
    }
 
    private Properties getConsumerProperties() {
        Properties properties = new Properties();
-       properties.put("bootstrap.servers", "localhost:9092");
-       properties.put("group.id", "test");
-       properties.put("key.deserializer", StringDeserializer.class);
-       properties.put("value.deserializer", StringDeserializer.class);
+       properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+       properties.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
+       properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+       properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+       properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
-       //At most once semantic
-       properties.put("acks", "0");
+       //At most once consumer semantic
+       properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+       properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
        return properties;
    }
 }

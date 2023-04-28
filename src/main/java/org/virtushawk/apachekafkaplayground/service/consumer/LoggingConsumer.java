@@ -11,12 +11,21 @@ import org.springframework.stereotype.Service;
 import org.virtushawk.apachekafkaplayground.ApacheKafkaPlaygroundApplication;
 import org.virtushawk.apachekafkaplayground.entity.VehiclePositionDTO;
 
+/**
+ * Simple Logging consumer
+ */
 @Service
 @KafkaListener(id = "logging-consumer", topics = ApacheKafkaPlaygroundApplication.POSITION_TOPIC)
 public class LoggingConsumer {
 
     private static final Logger LOGGER = LogManager.getLogger(LoggingConsumer.class);
 
+    /**
+     * Consume message and create logs
+     *
+     * @param key vehicleId key
+     * @param positionDTO position dto
+     */
     @KafkaHandler
     public void consume(@Header(KafkaHeaders.RECEIVED_KEY) String key,
                                       @Payload VehiclePositionDTO positionDTO) {

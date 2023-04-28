@@ -1,5 +1,8 @@
 package org.virtushawk.apachekafkaplayground.entity;
 
+/**
+ * DTO to store vehicle information about position
+ */
 public class VehiclePositionDTO extends BaseDTO {
 
     private Double x;

@@ -17,6 +17,9 @@ import org.virtushawk.apachekafkaplayground.entity.VehiclePositionUpdateDTO;
 import org.virtushawk.apachekafkaplayground.service.VehicleService;
 import org.virtushawk.apachekafkaplayground.service.producer.SignalProducer;
 
+/**
+ * Consumer for signal messages
+ */
 @Service
 @KafkaListener(topics = SignalProducer.SIGNAL_TOPIC,
         groupId = ApacheKafkaPlaygroundApplication.SIGNAL_CONSUMER_GROUP, concurrency = "3")
@@ -30,6 +33,13 @@ public class SignalConsumer {
         this.vehicleService = vehicleService;
     }
 
+    /**
+     * Consume message and calculate position. Sends new position to output topic(logging)
+     *
+     * @param key messageKey
+     * @param positionDTO position dto
+     * @return message with new position and vehicleKey as messageKey
+     */
     @KafkaHandler
     @SendTo(value = ApacheKafkaPlaygroundApplication.POSITION_TOPIC)
     public Message<VehiclePositionDTO> consume(@Header(KafkaHeaders.RECEIVED_KEY) String key,

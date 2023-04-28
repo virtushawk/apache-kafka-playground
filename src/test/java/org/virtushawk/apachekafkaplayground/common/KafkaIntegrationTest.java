@@ -8,6 +8,12 @@ import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.core.BrokerAddress;
 
+/**
+ * Base test with embedded kafka. Uses two node setup with ports 9092, 9093.
+ * <p>
+ *     Before each method it will try to create default test-topic with 3 partitions and replication factor 2
+ * </p>
+ */
 @EmbeddedKafka(value = 2, ports = {9092, 9093})
 public abstract class KafkaIntegrationTest extends BaseWithContextTest {
 

@@ -13,6 +13,9 @@ import org.virtushawk.apachekafkaplayground.entity.VehicleCreateDTO;
 import org.virtushawk.apachekafkaplayground.entity.VehiclePositionUpdateDTO;
 import org.virtushawk.apachekafkaplayground.service.VehicleService;
 
+/**
+ * API for vehicle requests
+ */
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleResource {
@@ -23,15 +26,26 @@ public class VehicleResource {
         this.vehicleService = vehicleService;
     }
 
+    /**
+     * Register new vehicle
+     *
+     * @param createDTO createDTO
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void registerVehicle(@Valid @RequestBody VehicleCreateDTO createDTO) {
         vehicleService.register(createDTO);
     }
 
+    /**
+     * Update vehicle position
+     *
+     * @param id ID of vehicle
+     * @param positionDTO positionDTO containing new position
+     */
     @PutMapping("{id}/signal")
     @ResponseStatus(HttpStatus.OK)
-    public void updatePosition( @PathVariable String id, @Valid @RequestBody VehiclePositionUpdateDTO signalDTO) {
-        vehicleService.updatePosition(id, signalDTO);
+    public void updatePosition( @PathVariable String id, @Valid @RequestBody VehiclePositionUpdateDTO positionDTO) {
+        vehicleService.updatePosition(id, positionDTO);
     }
 }

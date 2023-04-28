@@ -9,6 +9,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.virtushawk.apachekafkaplayground.entity.exception.ValidationException;
 
+/**
+ * Simple Exception controller for {@link ValidationException}
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
 

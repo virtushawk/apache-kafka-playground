@@ -1,5 +1,8 @@
 package org.virtushawk.apachekafkaplayground.entity.exception;
 
+/**
+ * Simple exception for validation
+ */
 public class ValidationException extends RuntimeException {
 
     public ValidationException() {

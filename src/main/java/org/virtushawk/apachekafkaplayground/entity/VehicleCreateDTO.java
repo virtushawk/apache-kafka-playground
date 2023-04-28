@@ -2,6 +2,9 @@ package org.virtushawk.apachekafkaplayground.entity;
 
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * DTO for sending vehicle creation requests
+ */
 public class VehicleCreateDTO extends BaseDTO {
 
     @NotNull(message = "Vehicle ID should not be null")

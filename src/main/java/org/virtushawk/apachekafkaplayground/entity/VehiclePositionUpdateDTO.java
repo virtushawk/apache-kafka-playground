@@ -2,6 +2,9 @@ package org.virtushawk.apachekafkaplayground.entity;
 
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * DTO used to update position information
+ */
 public class VehiclePositionUpdateDTO extends BaseDTO {
 
     @NotNull(message = "X coordinate should not be null")
